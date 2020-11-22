@@ -157,6 +157,8 @@ var imageZoom = (function () {
 
 	var index = (selector = `img[alt]:not([alt=""])`) => {
 		let zoomed = null;
+		const getImages = () =>
+			Array.prototype.slice.call(document.querySelectorAll(selector));
 
 		const handleClick = debounce(e => {
 			const target = e.target;
@@ -189,9 +191,7 @@ var imageZoom = (function () {
 		const start = () => {
 			injectStyles(styles);
 
-			Array.prototype.slice
-				.call(document.querySelectorAll(selector))
-				.forEach(processImage);
+			getImages().forEach(processImage);
 
 			document.body.addEventListener('click', handleClick);
 			window.addEventListener('scroll', handleScroll);
