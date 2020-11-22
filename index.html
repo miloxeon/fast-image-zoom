@@ -8,50 +8,80 @@
 		/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-		<title>Potion</title>
+		<title>Image-Zoom demo page</title>
 
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/gh/mvoloskov/potion/potion.min.css"
 		/>
+
+		<style>
+			img {
+				padding: 0;
+				margin: 0;
+			}
+
+			.grid-3 {
+				display: grid;
+				gap: 5px;
+				margin-bottom: 5px;
+				grid-template-areas:
+					'a b'
+					'a c';
+			}
+
+			.grid-3 > *:nth-child(1) {
+				grid-area: a;
+			}
+
+			.grid-3 > *:nth-child(2) {
+				grid-area: b;
+			}
+
+			.grid-3 > *:nth-child(3) {
+				grid-area: c;
+			}
+
+			.grid-1 {
+				display: grid;
+				gap: 5px;
+				grid-template-areas:
+					'b a'
+					'c a';
+			}
+
+			.grid-1 > *:nth-child(1) {
+				grid-area: a;
+			}
+
+			.grid-1 > *:nth-child(2) {
+				grid-area: b;
+			}
+
+			.grid-1 > *:nth-child(3) {
+				grid-area: c;
+			}
+		</style>
 	</head>
 
 	<body>
-		<h1 class="title">Potion</h1>
+		<h1 class="title">
+			<code>image-zoom</code>
+		</h1>
 		<p>
-			This is a test page filled with common HTML elements to be used to
-			provide visual feedback whilst building CSS systems and frameworks.
+			This works as seen on popular blogging platform but
+			<em>even better</em>.
 		</p>
-		<h2>Text</h2>
-		<h1>Heading 1</h1>
-		<h2>Heading 2</h2>
-		<h3>Heading 3</h3>
-		<h2>Images</h2>
-		<img
-			src="https://placekitten.com/481/480"
-			height="480"
-			width="481"
-			alt="Image alt text"
-		/>
-		<img
-			src="https://placekitten.com/480/200"
-			height="480"
-			width="480"
-			alt="Image alt text"
-		/>
-		<img
-			src="https://placekitten.com/200/480"
-			height="480"
-			width="480"
-			alt="Image alt text"
-		/>
-		<img
-			src="https://placekitten.com/480/480"
-			height="480"
-			width="480"
-			alt=""
-		/>
+		<p>Try clicking on images.</p>
 		<p>
+			<a
+				href="https://github.com/mvoloskov/image-zoom"
+				target="_blank"
+				rel="noopener noreferrer"
+				>Get it on GitHub</a
+			>
+		</p>
+		<p class="c-gray" style="opacity: 0.3">
 			A paragraph (from the Greek paragraphos, “to write beside” or “written
 			beside”) is a self-contained unit of a discourse in writing dealing
 			with a particular point or idea. A paragraph consists of one or more
@@ -59,139 +89,66 @@
 			paragraphs are usually an expected part of formal writing, used to
 			organize longer prose.
 		</p>
-		<p>
-			A paragraph (from the Greek paragraphos, “to write beside” or “written
-			beside”) is a self-contained unit of a discourse in writing dealing
-			with a particular point or idea. A paragraph consists of one or more
-			sentences. Though not required by the syntax of any language,
-			paragraphs are usually an expected part of formal writing, used to
-			organize longer prose.
-		</p>
-		<p>
-			A paragraph (from the Greek paragraphos, “to write beside” or “written
-			beside”) is a self-contained unit of a discourse in writing dealing
-			with a particular point or idea. A paragraph consists of one or more
-			sentences. Though not required by the syntax of any language,
-			paragraphs are usually an expected part of formal writing, used to
-			organize longer prose.
-		</p>
-		<blockquote>
-			A block quotation (also known as a long quotation or extract) is a
-			quotation in a written document, that is set off from the main text as
-			a paragraph, or block of text. It is typically distinguished visually
-			using indentation and a different typeface or smaller size quotation.
-			It may or may not include a citation, usually placed at the bottom.
-		</blockquote>
-		<h3>Ordered List</h3>
-		<ol>
-			<li>List Item 1</li>
-			<li>List Item 2</li>
-			<li>List Item 3</li>
-		</ol>
-		<h3>Unordered List</h3>
-		<ul>
-			<li>List Item 1</li>
-			<li>List Item 2</li>
-			<li>List Item 3</li>
-		</ul>
-		<hr />
-		<h2>Tabular data</h2>
-		<div class="table-wrapper">
-			<table>
-				<caption>
-					Table Caption
-				</caption>
-				<thead>
-					<tr>
-						<th>Table Heading 1</th>
-						<th>Table Heading 2</th>
-						<th>Table Heading 3</th>
-						<th>Table Heading 4</th>
-						<th>Table Heading 5</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="c-yellow">Table Cell 1</td>
-						<td>Table Cell 2</td>
-						<td>Table Cell 3</td>
-						<td>Table Cell 4</td>
-						<td>Table Cell 5</td>
-					</tr>
-					<tr>
-						<td>Table Cell 1</td>
-						<td class="b-red">Table Cell 2</td>
-						<td>Table Cell 3</td>
-						<td>Table Cell 4</td>
-						<td>
-							<span class="b-red">label</span>
-							<span class="b-yellow">another label</span>
-						</td>
-					</tr>
-					<tr>
-						<td>Table Cell 1</td>
-						<td>Table Cell 2</td>
-						<td>Table Cell 3</td>
-						<td>Table Cell 4</td>
-						<td>Table Cell 5</td>
-					</tr>
-					<tr>
-						<td>Table Cell 1</td>
-						<td>Table Cell 2</td>
-						<td>Table Cell 3</td>
-						<td>Table Cell 4</td>
-						<td>Table Cell 5</td>
-					</tr>
-				</tbody>
-			</table>
+
+		<div class="grid-3">
+			<img
+				src="https://placekitten.com/800/1000"
+				width="400"
+				height="500"
+				alt="Image alt text"
+			/>
+			<img
+				src="https://placekitten.com/800/400"
+				width="400"
+				height="200"
+				alt="Image alt text"
+			/>
+			<img
+				src="https://placekitten.com/800/587"
+				width="400"
+				height="293"
+				alt="Image alt text"
+			/>
 		</div>
-		<h2>Code</h2>
-		<p>
-			<strong>Inline code:</strong> <code>&lt;div&gt;code&lt;/div&gt;</code>
+		<div class="grid-1">
+			<img
+				src="https://placekitten.com/801/999"
+				width="400"
+				height="500"
+				alt="Image alt text"
+			/>
+			<img
+				src="https://placekitten.com/801/401"
+				width="400"
+				height="200"
+				alt="Image alt text"
+			/>
+			<img
+				src="https://placekitten.com/801/588"
+				width="400"
+				height="293"
+				alt="Image alt text"
+			/>
+		</div>
+		<p class="c-gray" style="opacity: 0.3">
+			A paragraph (from the Greek paragraphos, “to write beside” or “written
+			beside”) is a self-contained unit of a discourse in writing dealing
+			with a particular point or idea. A paragraph consists of one or more
+			sentences. Though not required by the syntax of any language,
+			paragraphs are usually an expected part of formal writing, used to
+			organize longer prose.
 		</p>
-		<pre>a block of code</pre>
-		<h2>Inline elements</h2>
-		<p>
-			<a href="#!"
-				>A paragraph (from the Greek paragraphos, “to write beside” or
-				“written beside”) is a self-contained unit of a discourse in writing
-				dealing with a particular point or idea. A paragraph consists of one
-				or more sentences. Though not required by the syntax of any
-				language, paragraphs are usually an expected part of formal writing,
-				used to organize longer prose</a
-			>.
+		<p class="c-gray" style="opacity: 0.3">
+			A paragraph (from the Greek paragraphos, “to write beside” or “written
+			beside”) is a self-contained unit of a discourse in writing dealing
+			with a particular point or idea. A paragraph consists of one or more
+			sentences. Though not required by the syntax of any language,
+			paragraphs are usually an expected part of formal writing, used to
+			organize longer prose.
 		</p>
-		<p><a href="#!">This is a text link</a>.</p>
-		<p><strong>Strong is used to indicate strong importance.</strong></p>
-		<p><em>This text has added emphasis.</em></p>
-		<p>
-			The <b>b element</b> is stylistically different text from normal text,
-			without any special importance.
-		</p>
-		<p><del>This text is deleted.</del></p>
-		<h2>Colors</h2>
-
-		<p class="c-gray">Gray text</p>
-		<p class="c-brown">Brown text</p>
-		<p class="c-orange">Orange text</p>
-		<p class="c-yellow">Yellow text</p>
-		<p class="c-green">Green text</p>
-		<p class="c-blue">Blue text</p>
-		<p class="c-purple">Purple text</p>
-		<p class="c-pink">Pink text</p>
-		<p class="c-red">Red text</p>
-
-		<p class="b-gray">Gray background</p>
-		<p class="b-brown">Brown background</p>
-		<p class="b-orange">Orange background</p>
-		<p class="b-yellow">Yellow background</p>
-		<p class="b-green">Green background</p>
-		<p class="b-blue">Blue background</p>
-		<p class="b-purple">Purple background</p>
-		<p class="b-pink">Pink background</p>
-		<p class="b-red">Red background</p>
-
-		<p class="c-yellow b-purple">Combinations</p>
-		<script src="image-zoom.js"></script>
+		<script src="dist/image-zoom.js"></script>
+		<script>
+			const destroy = imageZoom()
+		</script>
 	</body>
 </html>

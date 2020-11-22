@@ -1,6 +1,4 @@
-const selector = `img[alt]:not([alt=""])`
-
-const debounce = (f, ms) => {
+export const debounce = (f, ms) => {
 	let wait = false
 
 	return function (...args) {
@@ -15,7 +13,7 @@ const debounce = (f, ms) => {
 	}
 }
 
-const sumValues = (source, keys) => {
+export const sumValues = (source, keys) => {
 	let result = 0
 
 	keys.forEach(key => {
@@ -27,7 +25,7 @@ const sumValues = (source, keys) => {
 	return result
 }
 
-const unzoomImage = image => {
+export const unzoomImage = image => {
 	image.style.transform = 'scale(1)'
 	image.parentNode.classList.remove('image-zoom-wrapper-zoomed')
 	image.addEventListener(
@@ -39,9 +37,9 @@ const unzoomImage = image => {
 	)
 }
 
-const injectStyles = css => (document.head.innerHTML += css)
+export const injectStyles = css => (document.head.innerHTML += css)
 
-const zoomImage = image => {
+export const zoomImage = image => {
 	const imageRect = image.getBoundingClientRect()
 	const imageStyle = window.getComputedStyle(image)
 
@@ -98,85 +96,16 @@ const zoomImage = image => {
 	image.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`
 }
 
-let zoomed = null
+export const processImage = image => {
+	// create an image wrapper element
+	const wrapper = document.createElement('div')
 
-const handleClick = debounce(e => {
-	const target = e.target
+	// let wrapper mimick pearl display property to not break anything
+	wrapper.classList.add('image-zoom-wrapper')
+	wrapper.style.display = window.getComputedStyle(image).display
+	image.parentNode.insertBefore(wrapper, image)
+	wrapper.appendChild(image)
 
-	if (zoomed) {
-		unzoomImage(zoomed)
-		zoomed = null
-		return
-	}
-
-	if (target.matches(selector)) {
-		zoomImage(target)
-		zoomed = target
-	}
-}, 500)
-
-injectStyles(`
-	<style>
-		:root {
-			overflow-x: hidden;
-		}
-
-		.image-zoom-wrapper::after {
-			opacity: 0;
-			transition: opacity 150ms;
-			will-change: opacity;
-			display: block;
-			content: '';
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background-color: black;
-			z-index: 99998;
-			pointer-events: none;
-		}
-
-		.image-zoom-wrapper.image-zoom-wrapper-zoomed::after {
-			opacity: .6;
-			cursor: zoom-out;
-			pointer-events: all;
-		}
-
-		.image-zoom {
-			transition: transform 300ms ease;
-			will-change: transform;
-			cursor: zoom-in;
-		}
-
-		.image-zoom-zoomed {
-			position: relative;
-			z-index: 99999;
-			cursor: zoom-out;
-		}
-	</style>
-`)
-
-Array.prototype.slice
-	.call(document.querySelectorAll(selector))
-	.forEach(image => {
-		// create an image wrapper element
-		const wrapper = document.createElement('div')
-
-		// let wrapper mimick pearl display property to not break anything
-		wrapper.classList.add('image-zoom-wrapper')
-		wrapper.style.display = window.getComputedStyle(image).display
-		image.parentNode.insertBefore(wrapper, image)
-		wrapper.appendChild(image)
-
-		image.classList.add('image-zoom')
-		image.style.transform = 'scale(1)'
-	})
-
-document.body.addEventListener('click', handleClick)
-window.addEventListener('scroll', () => {
-	if (zoomed) {
-		unzoomImage(zoomed)
-		zoomed = null
-	}
-})
+	image.classList.add('image-zoom')
+	image.style.transform = 'scale(1)'
+}
