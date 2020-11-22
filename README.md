@@ -16,8 +16,8 @@ You click on an image and it smoothly zooms in or out to fit screen. You click a
 - ⚡️ Blazing fast — no matter if it's 10 images or 10000, it uses only two event listeners. Not per image, *just two listeners*. Complexity is always *O(1)*
 - 🤓 Powered by quirky math to precisely calculate everything and do the trick with only *one transformation*
 - 🦋 Looks good on both dark and light modes
-— 🍦 Zero-configuration by default but extensible when you need it
-— 🗿 Works flawlessly even on iOS Safari, in every orientation, with every image no matter the size and dimensions
+- 🍦 Zero-configuration by default but extensible when you need it
+- 🗿 Works flawlessly even on iOS Safari, in every orientation, with every image no matter the size and dimensions
 
 ## Basic usage
 
