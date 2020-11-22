@@ -170,6 +170,9 @@ var imageZoom = (function () {
 			}
 
 			if (target.matches(selector)) {
+				if (!target.classList.contains('image-zoom')) {
+					processImage(target);
+				}
 				zoomImage(target);
 				zoomed = target;
 			}

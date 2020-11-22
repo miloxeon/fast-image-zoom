@@ -22,6 +22,9 @@ export default (selector = `img[alt]:not([alt=""])`) => {
 		}
 
 		if (target.matches(selector)) {
+			if (!target.classList.contains('image-zoom')) {
+				processImage(target)
+			}
 			zoomImage(target)
 			zoomed = target
 		}
