@@ -1,4 +1,4 @@
-const zoomAvailable = `img[alt]:not([alt=""])`
+const selector = `img[alt]:not([alt=""])`
 
 const debounce = (f, ms) => {
 	let wait = false
@@ -28,28 +28,18 @@ const sumValues = (source, keys) => {
 }
 
 const unzoomImage = image => {
+	image.style.transform = 'scale(1)'
+	image.parentNode.classList.remove('image-zoom-wrapper-zoomed')
 	image.addEventListener(
 		'transitionend',
 		() => {
 			image.classList.remove('image-zoom-zoomed')
-			busy = false
 		},
 		{ once: true }
 	)
-	image.style.transform = 'scale(1)'
 }
 
-const unzoomImageRough = image => {
-	image.classList.remove('image-zoom-zoomed')
-	image.style.transform = 'scale(1)'
-	image.addEventListener(
-		'transitionend',
-		() => {
-			busy = false
-		},
-		{ once: true }
-	)
-}
+const injectStyles = css => (document.head.innerHTML += css)
 
 const zoomImage = image => {
 	const imageRect = image.getBoundingClientRect()
@@ -104,64 +94,84 @@ const zoomImage = image => {
 	const translateY = (screenCenterY - imageCenterY) / scale
 
 	image.classList.add('image-zoom-zoomed')
+	image.parentNode.classList.add('image-zoom-wrapper-zoomed')
 	image.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`
-	image.addEventListener(
-		'transitionend',
-		() => {
-			busy = false
-		},
-		{ once: true }
-	)
 }
-
-document.head.innerHTML += `
-	<style>
-		:root {
-			overflow-x: hidden;
-		}
-
-		.image-zoom {
-			transition: transform 300ms;
-			will-change: transform;
-		}
-
-		.image-zoom-zoomed {
-			position: relative;
-			z-index: 99999;
-		}
-	</style>
-`
-
-Array.prototype.slice
-	.call(document.querySelectorAll(zoomAvailable))
-	.forEach(image => {
-		image.classList.add('image-zoom')
-		image.style.transform = 'scale(1)'
-	})
 
 let zoomed = null
 
 const handleClick = debounce(e => {
 	const target = e.target
 
-	if (target.matches(zoomAvailable)) {
-		if (zoomed === target) {
-			unzoomImage(zoomed)
-			zoomed = null
-			return
-		}
+	if (zoomed) {
+		unzoomImage(zoomed)
+		zoomed = null
+		return
+	}
 
-		if (zoomed) {
-			unzoomImageRough(zoomed)
-			zoomed = null
-		}
-
+	if (target.matches(selector)) {
 		zoomImage(target)
 		zoomed = target
-	} else if (zoomed) {
-		unzoomImage(zoomed)
 	}
 }, 500)
+
+injectStyles(`
+	<style>
+		:root {
+			overflow-x: hidden;
+		}
+
+		.image-zoom-wrapper::after {
+			opacity: 0;
+			transition: opacity 150ms;
+			will-change: opacity;
+			display: block;
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: black;
+			z-index: 99998;
+			pointer-events: none;
+		}
+
+		.image-zoom-wrapper.image-zoom-wrapper-zoomed::after {
+			opacity: .6;
+			cursor: zoom-out;
+			pointer-events: all;
+		}
+
+		.image-zoom {
+			transition: transform 300ms ease;
+			will-change: transform;
+			cursor: zoom-in;
+		}
+
+		.image-zoom-zoomed {
+			position: relative;
+			z-index: 99999;
+			cursor: zoom-out;
+		}
+	</style>
+`)
+
+Array.prototype.slice
+	.call(document.querySelectorAll(selector))
+	.forEach(image => {
+		// create an image wrapper element
+		const wrapper = document.createElement('div')
+
+		// let wrapper mimick pearl display property to not break anything
+		wrapper.classList.add('image-zoom-wrapper')
+		wrapper.style.display = window.getComputedStyle(image).display
+		image.parentNode.insertBefore(wrapper, image)
+		wrapper.appendChild(image)
+
+		image.classList.add('image-zoom')
+		image.style.transform = 'scale(1)'
+	})
 
 document.body.addEventListener('click', handleClick)
 window.addEventListener('scroll', () => {
