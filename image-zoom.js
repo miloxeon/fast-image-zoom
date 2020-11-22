@@ -88,10 +88,23 @@ const zoomImage = image => {
 	const widthScaleIsOkay = imageHeight * widthScale <= vh
 	const scale = widthScaleIsOkay ? widthScale : heightScale
 
-	// const futureTop =
+	const doc = document.documentElement
+	const scrollLeft =
+		(window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0)
+	const scrollTop =
+		(window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
+
+	const imageCenterX = scrollLeft + imageRect.left + imageRect.width / 2
+	const imageCenterY = scrollTop + imageRect.top + imageRect.height / 2
+
+	const screenCenterX = scrollLeft + vw / 2
+	const screenCenterY = scrollTop + vh / 2
+
+	const translateX = (screenCenterX - imageCenterX) / scale
+	const translateY = (screenCenterY - imageCenterY) / scale
 
 	image.classList.add('image-zoom-zoomed')
-	image.style.transform = `scale(${scale})`
+	image.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`
 	image.addEventListener(
 		'transitionend',
 		() => {
@@ -151,3 +164,9 @@ const handleClick = debounce(e => {
 }, 500)
 
 document.body.addEventListener('click', handleClick)
+window.addEventListener('scroll', () => {
+	if (zoomed) {
+		unzoomImage(zoomed)
+		zoomed = null
+	}
+})
