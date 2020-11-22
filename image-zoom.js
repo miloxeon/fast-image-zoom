@@ -1,21 +1,77 @@
-const imagesToZoomSelector = `img[alt]:not([alt=""])`
+const zoomAvailable = `img[alt]:not([alt=""])`
+
+const debounce = (f, ms) => {
+	let wait = false
+
+	return function (...args) {
+		if (wait) return
+
+		f.apply(this, args)
+		wait = true
+
+		setTimeout(() => {
+			wait = false
+		}, ms)
+	}
+}
+
+const sumValues = (source, keys) => {
+	let result = 0
+
+	keys.forEach(key => {
+		const property = source[key]
+		const value = parseInt(property, 10) || 0
+		result += value
+	})
+
+	return result
+}
+
+const unzoomImage = image => {
+	image.addEventListener(
+		'transitionend',
+		() => {
+			image.classList.remove('image-zoom-zoomed')
+			busy = false
+		},
+		{ once: true }
+	)
+	image.style.transform = 'scale(1)'
+}
+
+const unzoomImageRough = image => {
+	image.classList.remove('image-zoom-zoomed')
+	image.style.transform = 'scale(1)'
+	image.addEventListener(
+		'transitionend',
+		() => {
+			busy = false
+		},
+		{ once: true }
+	)
+}
 
 const zoomImage = image => {
-	const alreadyZoomed = image.classList.contains('image-zoom-zoomed')
-
-	if (alreadyZoomed) {
-		image.addEventListener(
-			'transitionend',
-			() => {
-				image.classList.remove('image-zoom-zoomed')
-			},
-			{ once: true }
-		)
-		image.style.transform = 'scale(1)'
-		return
-	}
-
 	const imageRect = image.getBoundingClientRect()
+	const imageStyle = window.getComputedStyle(image)
+
+	const imageWidth =
+		imageRect.width -
+		sumValues(imageStyle, [
+			'borderLeftWidth',
+			'borderRightWidth',
+			'paddingLeft',
+			'paddingRight',
+		])
+
+	const imageHeight =
+		imageRect.height -
+		sumValues(imageStyle, [
+			'borderTopWidth',
+			'borderBottomWidth',
+			'paddingTop',
+			'paddingBottom',
+		])
 
 	const vw = Math.max(
 		document.documentElement.clientWidth || 0,
@@ -26,18 +82,31 @@ const zoomImage = image => {
 		window.innerHeight || 0
 	)
 
-	const widthScale = vw / imageRect.width
-	const heightScale = vh / imageRect.height
+	const widthScale = vw / imageWidth
+	const heightScale = vh / imageHeight
 
-	const widthScaleIsOkay = imageRect.height * widthScale <= vh
+	const widthScaleIsOkay = imageHeight * widthScale <= vh
 	const scale = widthScaleIsOkay ? widthScale : heightScale
+
+	// const futureTop =
 
 	image.classList.add('image-zoom-zoomed')
 	image.style.transform = `scale(${scale})`
+	image.addEventListener(
+		'transitionend',
+		() => {
+			busy = false
+		},
+		{ once: true }
+	)
 }
 
 document.head.innerHTML += `
 	<style>
+		:root {
+			overflow-x: hidden;
+		}
+
 		.image-zoom {
 			transition: transform 300ms;
 			will-change: transform;
@@ -51,9 +120,34 @@ document.head.innerHTML += `
 `
 
 Array.prototype.slice
-	.call(document.querySelectorAll(imagesToZoomSelector))
+	.call(document.querySelectorAll(zoomAvailable))
 	.forEach(image => {
 		image.classList.add('image-zoom')
 		image.style.transform = 'scale(1)'
-		image.addEventListener('click', () => zoomImage(image))
 	})
+
+let zoomed = null
+
+const handleClick = debounce(e => {
+	const target = e.target
+
+	if (target.matches(zoomAvailable)) {
+		if (zoomed === target) {
+			unzoomImage(zoomed)
+			zoomed = null
+			return
+		}
+
+		if (zoomed) {
+			unzoomImageRough(zoomed)
+			zoomed = null
+		}
+
+		zoomImage(target)
+		zoomed = target
+	} else if (zoomed) {
+		unzoomImage(zoomed)
+	}
+}, 500)
+
+document.body.addEventListener('click', handleClick)
