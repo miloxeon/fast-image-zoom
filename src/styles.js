@@ -7,7 +7,6 @@ export default `
 		.image-zoom-wrapper::after {
 			opacity: 0;
 			transition: opacity 150ms cubic-bezier(.25, .1, .25 ,1);
-			will-change: opacity;
 			display: block;
 			content: '';
 			position: fixed;
@@ -28,7 +27,6 @@ export default `
 
 		.image-zoom {
 			transition: transform 300ms cubic-bezier(.25, .1, .25 ,1);
-			will-change: transform;
 			cursor: zoom-in;
 		}
 
