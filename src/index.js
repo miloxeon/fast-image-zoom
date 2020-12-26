@@ -7,7 +7,7 @@ import {
 	processImage,
 } from './lib'
 
-export default (selector = `img[alt]:not([alt=""])`) => {
+export default (selector = `img[alt]:not([alt=""])`, cb = () => {}) => {
 	let zoomed = null
 	const getImages = () =>
 		Array.prototype.slice.call(document.querySelectorAll(selector))
@@ -50,6 +50,8 @@ export default (selector = `img[alt]:not([alt=""])`) => {
 
 		document.body.addEventListener('click', handleClick)
 		window.addEventListener('scroll', handleScroll)
+
+		cb()
 	}
 
 	if (document.readyState === 'interactive') {
