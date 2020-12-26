@@ -67,7 +67,9 @@ The default selector is `img[alt]:not([alt=""])`.
 You can provide your own though:
 
 ```JS
-imageZoom('img, svg')   // alternative selector
+imageZoom({
+    selector: 'img, svg'
+})
 ```
 
 ### Alternative timing function

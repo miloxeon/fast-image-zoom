@@ -7,7 +7,13 @@ import {
 	processImage,
 } from './lib'
 
-export default (selector = `img[alt]:not([alt=""])`, cb = () => {}) => {
+export default config => {
+	const {
+		selector = `img[alt]:not([alt=""])`,
+		cb = () => {},
+	} = config
+
+
 	let zoomed = null
 	const getImages = () =>
 		Array.prototype.slice.call(document.querySelectorAll(selector))
