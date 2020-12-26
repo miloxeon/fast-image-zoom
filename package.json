@@ -11,7 +11,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-push": "npm run build-iife && git add dist"
+			"pre-commit": "npm run build-iife && git add dist"
 		}
 	},
 	"devDependencies": {
