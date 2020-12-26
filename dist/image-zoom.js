@@ -153,7 +153,7 @@ var imageZoom = (function () {
 		image.style.transform = 'scale(1)';
 	};
 
-	var index = (selector = `img[alt]:not([alt=""])`) => {
+	var index = (selector = `img[alt]:not([alt=""])`, cb = () => {}) => {
 		let zoomed = null;
 		const getImages = () =>
 			Array.prototype.slice.call(document.querySelectorAll(selector));
@@ -196,6 +196,8 @@ var imageZoom = (function () {
 
 			document.body.addEventListener('click', handleClick);
 			window.addEventListener('scroll', handleScroll);
+
+			cb();
 		};
 
 		if (document.readyState === 'interactive') {
