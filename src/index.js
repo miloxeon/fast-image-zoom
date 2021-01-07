@@ -7,10 +7,10 @@ import {
 	processImage,
 } from './lib'
 
-export default config => {
+export default (config = {}) => {
 	const {
 		selector = `img[alt]:not([alt=""])`,
-		cb = () => {},
+		cb = () => {}
 	} = config
 
 

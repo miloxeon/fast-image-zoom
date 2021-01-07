@@ -153,10 +153,10 @@ var imageZoom = (function () {
 		image.style.transform = 'scale(1)';
 	};
 
-	var index = config => {
+	var index = (config = {}) => {
 		const {
 			selector = `img[alt]:not([alt=""])`,
-			cb = () => {},
+			cb = () => {}
 		} = config;
 
 
