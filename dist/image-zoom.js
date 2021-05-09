@@ -189,9 +189,19 @@ var imageZoom = (function () {
 			}
 		};
 
+		const handleKeydown = e => {
+			if (e.code !== 'Escape') return
+			e.preventDefault();
+			if (zoomed) {
+				unzoomImage(zoomed);
+				zoomed = null;
+			}
+		};
+
 		const destroy = () => {
 			document.body.removeEventListener('click', handleClick);
 			window.removeEventListener('scroll', handleScroll);
+			document.removeEventListener('keydown', handleKeydown);
 			document.head.removeChild(document.getElementById('image-zoom-styles'));
 		};
 
@@ -202,6 +212,7 @@ var imageZoom = (function () {
 
 			document.body.addEventListener('click', handleClick);
 			window.addEventListener('scroll', handleScroll);
+			document.addEventListener('keydown', handleKeydown);
 
 			cb();
 		};
