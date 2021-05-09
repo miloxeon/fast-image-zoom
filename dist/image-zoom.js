@@ -206,7 +206,7 @@ var imageZoom = (function () {
 			cb();
 		};
 
-		if (document.readyState === 'interactive') {
+		if (document.readyState === 'interactive' || document.readyState === 'ready') {
 			start();
 		} else {
 			document.addEventListener('DOMContentLoaded', start);
