@@ -1,6 +1,6 @@
 {
 	"name": "image-zoom",
-	"version": "2.3.0",
+	"version": "3.3.0",
 	"description": "Image zoom on click as seen on popular publishing platform",
 	"repository": "git@github.com:mvoloskov/image-zoom.git",
 	"main": "src/index.js",
