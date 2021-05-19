@@ -1,4 +1,4 @@
-import styles from './styles'
+import makeStyles from './styles'
 import {
 	debounce,
 	unzoomImage,
@@ -10,7 +10,8 @@ import {
 export default (config = {}) => {
 	const {
 		selector = `img[alt]:not([alt=""])`,
-		cb = () => {}
+		cb = () => {},
+		backgroundColor = '#fff',
 	} = config
 
 
@@ -60,6 +61,7 @@ export default (config = {}) => {
 	}
 
 	const start = () => {
+		const styles = makeStyles({ backgroundColor })
 		injectStyles(styles)
 
 		getImages().forEach(processImage)

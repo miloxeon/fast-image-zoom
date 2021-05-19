@@ -1,7 +1,7 @@
 var imageZoom = (function () {
 	'use strict';
 
-	var styles = `
+	var makeStyles = config => `
 	<style id="image-zoom-styles">
 		:root {
 			overflow-x: hidden;
@@ -17,13 +17,13 @@ var imageZoom = (function () {
 			left: 0;
 			right: 0;
 			bottom: 0;
-			background-color: black;
+			background-color: ${config.backgroundColor};
 			z-index: 99998;
 			pointer-events: none;
 		}
 
 		.image-zoom-wrapper.image-zoom-wrapper-zoomed::after {
-			opacity: .6;
+			opacity: 1;
 			cursor: zoom-out;
 			pointer-events: all;
 		}
@@ -156,7 +156,8 @@ var imageZoom = (function () {
 	var index = (config = {}) => {
 		const {
 			selector = `img[alt]:not([alt=""])`,
-			cb = () => {}
+			cb = () => {},
+			backgroundColor = '#fff',
 		} = config;
 
 
@@ -206,6 +207,7 @@ var imageZoom = (function () {
 		};
 
 		const start = () => {
+			const styles = makeStyles({ backgroundColor });
 			injectStyles(styles);
 
 			getImages().forEach(processImage);
