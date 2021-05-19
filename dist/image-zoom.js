@@ -192,7 +192,7 @@ var imageZoom = (function () {
 	};
 
 	const defaultConfig = {
-		selector: `img[alt]:not([alt=""])`,
+		selector: `img[alt]:not([alt=""]):not([data-image-zoom-disabled])`,
 		cb: () => {},
 		padding: 20,
 		exceed: false,

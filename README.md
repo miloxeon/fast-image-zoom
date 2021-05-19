@@ -66,7 +66,7 @@ Here are the defaults:
 
 ```JS
 imageZoom({
-    selector: `img[alt]:not([alt=""])`,
+    selector: `img[alt]:not([alt=""]):not([data-image-zoom-disabled])`,
     cb: () => {},
     exceed: false,
     padding: 20,
@@ -92,6 +92,16 @@ You can explicitly define `exceed` for a specific picture via a data-attribute:
 ```HTML
 <img src="..." alt="..." data-image-zoom-exceed="true">
 ```
+
+### Disabling the plugin for the specific image
+
+You can disable zooming for any image you like, even if it has `alt`:
+
+```HTML
+<img src="..." alt="..." data-image-zoom-disabled>
+```
+
+Note that if you redefine the `selector` in a way that doesn't account `data-image-zoom-disabled` attribute, this feature will stop working.
 
 ### Restyling
 
