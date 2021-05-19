@@ -1,4 +1,5 @@
 <p align="center">
+    <img width="600" alt="" src="https://user-images.githubusercontent.com/14220138/118895782-5b68ea00-b8f6-11eb-8019-1bc822562666.gif">
 </p>
 <h6 align="center">
     <a href="https://github.com/mvoloskov/image-zoom/blob/master/package.json"><img src="https://img.shields.io/badge/dependencies-0-brightgreen" alt="Dependencies"></a>
@@ -14,7 +15,6 @@
     &nbsp;&nbsp;&bull;&nbsp;&nbsp;
     <a href="https://miloslav.website">Author</a>
 </h3>
-
 
 
 # 🏞 `image-zoom` 
