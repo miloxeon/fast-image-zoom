@@ -60,21 +60,44 @@ Plugin targets *meaningful*, content images:
 <img src="bar.jpg" alt="" />
 ```
 
-### Redefining what images to target
+## Configuration
 
-The default selector is `img[alt]:not([alt=""])`.
-
-You can provide your own though:
+Here are the defaults:
 
 ```JS
 imageZoom({
-    selector: 'img, svg'
+    selector: `img[alt]:not([alt=""])`,
+    cb: () => {},
+    exceed: false,
+    padding: 20,
 })
 ```
 
-### Alternative timing function
+- `selector` (string) is used to target images. By default it only targets *meaningful* images (e.g. ones with `alt`), so your icons won't be magnified on click.
+
+- `cb` (function) fires after the plugin is initialized.
+
+- `exceed` (boolean) defines whether images should exceed their natural size when zoomed. For example if you zoom 100x100 image on a 1080p screen with `exceed: false`, its final size will be 100px, meanwile with `exceed: true` it will be 1080px.
+
+- `padding` (integer) defines a gap in pixels between a zoomed image and the closest edge of the viewport.
+
+Note that if `exceed` is false and a smaller image appear to have a larger gap between its edge and the edge of the viewport, padding won't be added. For example, if you zoom an 100x100 image on a 1080p screen and your padding is set to 20, a natural gap between an image and the viewport edge would be (1080 - 100) / 2 = 490, thus there is no need to add that 20px gap.
+
+Only pixels are supported by now.
+
+### Setting `exceed` per image
+
+You can explicitly define `exceed` for a specific picture via a data-attribute:
+
+```HTML
+<img src="..." alt="..." data-image-zoom-exceed="true">
+```
+
+### Restyling
 
 You can always hack the plugin redefining straightforward CSS:
+
+#### Changing a timing function
 
 ```CSS
 .image-zoom,
@@ -83,7 +106,7 @@ You can always hack the plugin redefining straightforward CSS:
 }
 ```
 
-### Alternative background color
+#### Changing the background color
 
 ```CSS
 .image-zoom-wrapper::after {
@@ -91,7 +114,14 @@ You can always hack the plugin redefining straightforward CSS:
 }
 ```
 
-### Disabling the plugin
+## Anatomy
+
+- `.image-zoom-wrapper` — element that wraps every image. Mimicks its `display` property. We use it to add page background and slightly separate the zoomed image from what is behind.
+- `.image-zoom-wrapper-zoomed` — the same wrapper but when image is zoomed.
+- `.image-zoom` — image itself that was processed and is interactive ready to zoom.
+- `.image-zoom-zoomed` — zoomed image.
+
+## Disabling the plugin
 
 Being called, plugin returns the destroy function that you may call to remove event listeners. It will also remove related styles from `<head>` and from images themselves.
 
@@ -101,13 +131,6 @@ const destroy = imageZoom()
 // don't need it anymore
 destroy()
 ```
-
-## Anatomy
-
-- `.image-zoom-wrapper` — element that wraps every image. Mimicks its `display` property. We use it to add page background and slightly separate the zoomed image from what is behind.
-- `.image-zoom-wrapper-zoomed` — the same wrapper but when image is zoomed.
-- `.image-zoom` — image itself that was processed and is interactive ready to zoom.
-- `.image-zoom-zoomed` — zoomed image.
 
 ## Limitations
 
