@@ -7,7 +7,10 @@
 	"author": "mvoloskov",
 	"license": "BSL-1.0",
 	"scripts": {
-		"build-iife": "rollup -c"
+		"build-iife": "rollup -c",
+		"watch": "rollup -c --watch",
+		"serve": "serve",
+		"dev": "concurrently 'npm run watch' 'npm run serve'"
 	},
 	"husky": {
 		"hooks": {
@@ -15,7 +18,9 @@
 		}
 	},
 	"devDependencies": {
+		"concurrently": "^6.1.0",
 		"husky": "^4.2.5",
-		"rollup": "^2.26.10"
+		"rollup": "^2.26.10",
+		"serve": "^11.3.2"
 	}
 }
