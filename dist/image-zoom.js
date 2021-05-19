@@ -71,18 +71,16 @@ var imageZoom = (function () {
 	const unzoomImage = image => {
 		image.style.transform = 'scale(1)';
 		image.parentNode.classList.remove('image-zoom-wrapper-zoomed');
-		image.addEventListener(
-			'transitionend',
-			() => {
-				image.classList.remove('image-zoom-zoomed');
-			},
-			{ once: true }
-		);
+		image.addEventListener('transitionend', () => {
+			image.classList.remove('image-zoom-zoomed');
+		}, {
+			once: true
+		});
 	};
 
 	const injectStyles = css => (document.head.innerHTML += css);
 
-	const zoomImage = image => {
+	const zoomImage = (image, padding) => {
 		const imageRect = image.getBoundingClientRect();
 		const imageStyle = window.getComputedStyle(image);
 
@@ -113,8 +111,8 @@ var imageZoom = (function () {
 			window.innerHeight || 0
 		);
 
-		const widthScale = vw / imageWidth;
-		const heightScale = vh / imageHeight;
+		const widthScale = vw / (imageWidth + padding);
+		const heightScale = vh / (imageHeight + padding);
 
 		const widthScaleIsOkay = imageHeight * widthScale <= vh;
 		const scale = widthScaleIsOkay ? widthScale : heightScale;
@@ -156,7 +154,8 @@ var imageZoom = (function () {
 	var index = (config = {}) => {
 		const {
 			selector = `img[alt]:not([alt=""])`,
-			cb = () => {}
+			cb = () => {},
+			padding = 20,
 		} = config;
 
 
@@ -177,7 +176,7 @@ var imageZoom = (function () {
 				if (!target.classList.contains('image-zoom')) {
 					processImage(target);
 				}
-				zoomImage(target);
+				zoomImage(target, padding);
 				zoomed = target;
 			}
 		}, 500);

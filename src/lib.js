@@ -28,18 +28,16 @@ export const sumValues = (source, keys) => {
 export const unzoomImage = image => {
 	image.style.transform = 'scale(1)'
 	image.parentNode.classList.remove('image-zoom-wrapper-zoomed')
-	image.addEventListener(
-		'transitionend',
-		() => {
-			image.classList.remove('image-zoom-zoomed')
-		},
-		{ once: true }
-	)
+	image.addEventListener('transitionend', () => {
+		image.classList.remove('image-zoom-zoomed')
+	}, {
+		once: true
+	})
 }
 
 export const injectStyles = css => (document.head.innerHTML += css)
 
-export const zoomImage = image => {
+export const zoomImage = (image, padding) => {
 	const imageRect = image.getBoundingClientRect()
 	const imageStyle = window.getComputedStyle(image)
 
@@ -70,8 +68,8 @@ export const zoomImage = image => {
 		window.innerHeight || 0
 	)
 
-	const widthScale = vw / imageWidth
-	const heightScale = vh / imageHeight
+	const widthScale = vw / (imageWidth + padding)
+	const heightScale = vh / (imageHeight + padding)
 
 	const widthScaleIsOkay = imageHeight * widthScale <= vh
 	const scale = widthScaleIsOkay ? widthScale : heightScale

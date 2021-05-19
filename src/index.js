@@ -10,7 +10,8 @@ import {
 export default (config = {}) => {
 	const {
 		selector = `img[alt]:not([alt=""])`,
-		cb = () => {}
+		cb = () => {},
+		padding = 20,
 	} = config
 
 
@@ -31,7 +32,7 @@ export default (config = {}) => {
 			if (!target.classList.contains('image-zoom')) {
 				processImage(target)
 			}
-			zoomImage(target)
+			zoomImage(target, padding)
 			zoomed = target
 		}
 	}, 500)
