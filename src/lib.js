@@ -37,7 +37,14 @@ export const unzoomImage = image => {
 
 export const injectStyles = css => (document.head.innerHTML += css)
 
-export const zoomImage = (image, padding) => {
+const getScale = (imageHeight, imageWidth, maxHeight, maxWidth) => {
+	const widthScale = maxWidth / imageWidth
+	const heightScale = maxHeight / imageHeight
+	const widthScaleIsOkay = imageHeight * widthScale <= maxHeight
+	return widthScaleIsOkay ? widthScale : heightScale
+}
+
+export const zoomImage = (image, config) => {
 	const imageRect = image.getBoundingClientRect()
 	const imageStyle = window.getComputedStyle(image)
 
@@ -67,12 +74,45 @@ export const zoomImage = (image, padding) => {
 		document.documentElement.clientHeight || 0,
 		window.innerHeight || 0
 	)
+	
+	const shouldExceed = config.exceed || image.dataset?.imageZoomExceed === 'true'
+	let scale = getScale(imageHeight, imageWidth, vh, vw)
 
-	const widthScale = vw / (imageWidth + padding)
-	const heightScale = vh / (imageHeight + padding)
+	if (!shouldExceed) {
+		const limitedScale = getScale(
+			imageHeight,
+			imageWidth,
+			image.naturalHeight,
+			image.naturalWidth
+		)
+		scale = Math.min(scale, limitedScale)
+	}
 
-	const widthScaleIsOkay = imageHeight * widthScale <= vh
-	const scale = widthScaleIsOkay ? widthScale : heightScale
+	const isPaddingNeeded = config.padding > Math.min(
+		vh - imageHeight * scale,
+		vw - imageWidth * scale
+	) / 2
+
+	if (isPaddingNeeded) {
+		let scaleWithPaddingBeforeExceed = getScale(
+			imageHeight + config.padding,
+			imageWidth + config.padding,
+			vh,
+			vw
+		)
+
+		if (!shouldExceed) {
+			const limitedScale = getScale(
+				imageHeight,
+				imageWidth,
+				image.naturalHeight - config.padding,
+				image.naturalWidth - config.padding
+			)
+			scaleWithPaddingBeforeExceed = Math.min(scaleWithPaddingBeforeExceed, limitedScale)
+		}
+
+		scale = scaleWithPaddingBeforeExceed
+	}
 
 	const doc = document.documentElement
 	const scrollLeft =

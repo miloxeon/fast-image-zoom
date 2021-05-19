@@ -7,13 +7,15 @@ import {
 	processImage,
 } from './lib'
 
-export default (config = {}) => {
-	const {
-		selector = `img[alt]:not([alt=""])`,
-		cb = () => {},
-		padding = 20,
-	} = config
+const defaultConfig = {
+	selector: `img[alt]:not([alt=""])`,
+	cb: () => {},
+	padding: 20,
+	exceed: false,
+}
 
+export default (config = defaultConfig) => {
+	const { selector, cb } = config
 
 	let zoomed = null
 	const getImages = () =>
@@ -32,7 +34,7 @@ export default (config = {}) => {
 			if (!target.classList.contains('image-zoom')) {
 				processImage(target)
 			}
-			zoomImage(target, padding)
+			zoomImage(target, config)
 			zoomed = target
 		}
 	}, 500)

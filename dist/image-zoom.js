@@ -80,7 +80,14 @@ var imageZoom = (function () {
 
 	const injectStyles = css => (document.head.innerHTML += css);
 
-	const zoomImage = (image, padding) => {
+	const getScale = (imageHeight, imageWidth, maxHeight, maxWidth) => {
+		const widthScale = maxWidth / imageWidth;
+		const heightScale = maxHeight / imageHeight;
+		const widthScaleIsOkay = imageHeight * widthScale <= maxHeight;
+		return widthScaleIsOkay ? widthScale : heightScale
+	};
+
+	const zoomImage = (image, config) => {
 		const imageRect = image.getBoundingClientRect();
 		const imageStyle = window.getComputedStyle(image);
 
@@ -110,12 +117,45 @@ var imageZoom = (function () {
 			document.documentElement.clientHeight || 0,
 			window.innerHeight || 0
 		);
+		
+		const shouldExceed = config.exceed || image.dataset?.imageZoomExceed === 'true';
+		let scale = getScale(imageHeight, imageWidth, vh, vw);
 
-		const widthScale = vw / (imageWidth + padding);
-		const heightScale = vh / (imageHeight + padding);
+		if (!shouldExceed) {
+			const limitedScale = getScale(
+				imageHeight,
+				imageWidth,
+				image.naturalHeight,
+				image.naturalWidth
+			);
+			scale = Math.min(scale, limitedScale);
+		}
 
-		const widthScaleIsOkay = imageHeight * widthScale <= vh;
-		const scale = widthScaleIsOkay ? widthScale : heightScale;
+		const isPaddingNeeded = config.padding > Math.min(
+			vh - imageHeight * scale,
+			vw - imageWidth * scale
+		) / 2;
+
+		if (isPaddingNeeded) {
+			let scaleWithPaddingBeforeExceed = getScale(
+				imageHeight + config.padding,
+				imageWidth + config.padding,
+				vh,
+				vw
+			);
+
+			if (!shouldExceed) {
+				const limitedScale = getScale(
+					imageHeight,
+					imageWidth,
+					image.naturalHeight - config.padding,
+					image.naturalWidth - config.padding
+				);
+				scaleWithPaddingBeforeExceed = Math.min(scaleWithPaddingBeforeExceed, limitedScale);
+			}
+
+			scale = scaleWithPaddingBeforeExceed;
+		}
 
 		const doc = document.documentElement;
 		const scrollLeft =
@@ -151,13 +191,15 @@ var imageZoom = (function () {
 		image.style.transform = 'scale(1)';
 	};
 
-	var index = (config = {}) => {
-		const {
-			selector = `img[alt]:not([alt=""])`,
-			cb = () => {},
-			padding = 20,
-		} = config;
+	const defaultConfig = {
+		selector: `img[alt]:not([alt=""])`,
+		cb: () => {},
+		padding: 20,
+		exceed: false,
+	};
 
+	var index = (config = defaultConfig) => {
+		const { selector, cb } = config;
 
 		let zoomed = null;
 		const getImages = () =>
@@ -176,7 +218,7 @@ var imageZoom = (function () {
 				if (!target.classList.contains('image-zoom')) {
 					processImage(target);
 				}
-				zoomImage(target, padding);
+				zoomImage(target, config);
 				zoomed = target;
 			}
 		}, 500);
