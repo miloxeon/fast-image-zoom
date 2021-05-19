@@ -1,4 +1,4 @@
-export default config => `
+export default `
 	<style id="image-zoom-styles">
 		:root {
 			overflow-x: hidden;
@@ -14,7 +14,7 @@ export default config => `
 			left: 0;
 			right: 0;
 			bottom: 0;
-			background-color: ${config.backgroundColor};
+			background-color: white;
 			z-index: 99998;
 			pointer-events: none;
 		}
