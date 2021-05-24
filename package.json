@@ -1,5 +1,5 @@
 {
-	"name": "image-zoom",
+	"name": "fast-image-zoom",
 	"version": "3.4.0",
 	"description": "Image zoom on click as seen on popular publishing platform",
 	"repository": "git@github.com:mvoloskov/image-zoom.git",
