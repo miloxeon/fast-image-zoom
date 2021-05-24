@@ -12,6 +12,9 @@
 		"serve": "serve",
 		"dev": "concurrently 'npm run watch' 'npm run serve'"
 	},
+	"files": [
+		"/src"
+	],
 	"husky": {
 		"hooks": {
 			"pre-commit": "npm run build-iife && git add dist"
