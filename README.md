@@ -3,7 +3,6 @@
 </p>
 <p align="center">
     <a href="https://github.com/mvoloskov/fast-image-zoom/blob/master/package.json"><img src="https://img.shields.io/badge/dependencies-0-brightgreen" alt="Dependencies"></a>
-    <img alt="npm bundle size" src="https://img.shields.io/bundlephobia/minzip/fast-image-zoom?label=As%20tiny%20as">
     <img alt="npm" src="https://img.shields.io/npm/v/fast-image-zoom">
     <img alt="License: BSL-1.0" src="https://img.shields.io/github/license/mvoloskov/fast-image-zoom?color=brightgreen">
     <a href="https://www.buymeacoffee.com/mvoloskov"><img alt="Sponsor this project" src="https://img.shields.io/badge/-sponsor-ffdd00?logo=buy-me-a-coffee&logoColor=black"></a>
