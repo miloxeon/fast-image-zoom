@@ -6,6 +6,11 @@
 	"main": "src/index.js",
 	"author": "mvoloskov",
 	"license": "BSL-1.0",
+	"keywords": [
+		"plugin",
+		"medium",
+		"image-zoom"
+	],
 	"scripts": {
 		"build-iife": "rollup -c",
 		"watch": "rollup -c --watch",
