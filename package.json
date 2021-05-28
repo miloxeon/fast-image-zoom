@@ -14,9 +14,9 @@
 	"scripts": {
 		"build-iife": "rollup -c",
 		"watch": "rollup -c --watch",
-		"serve": "serve",
+		"devserver": "serve",
 		"test": "exit 0",
-		"dev": "concurrently 'npm run watch' 'npm run serve'"
+		"dev": "concurrently npm:watch npm:devserver"
 	},
 	"files": [
 		"/src"

@@ -15,7 +15,7 @@ const defaultConfig = {
 }
 
 export default (config = defaultConfig) => {
-	const { selector, cb } = config
+	const { selector, cb } = Object.assign({}, defaultConfig, config)
 
 	let zoomed = null
 	const getImages = () =>
