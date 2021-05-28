@@ -39,11 +39,10 @@ export default (config = defaultConfig) => {
 		}
 	}, 500)
 
-	const handleScroll = () => {
-		if (zoomed) {
-			unzoomImage(zoomed)
-			zoomed = null
-		}
+	const handleUnzoomingInteraction = () => {
+		if (!zoomed) return
+		unzoomImage(zoomed)
+		zoomed = null
 	}
 
 	const handleKeydown = e => {
@@ -57,7 +56,8 @@ export default (config = defaultConfig) => {
 
 	const destroy = () => {
 		document.body.removeEventListener('click', handleClick)
-		window.removeEventListener('scroll', handleScroll)
+		window.removeEventListener('scroll', handleUnzoomingInteraction)
+		window.removeEventListener('resize', handleUnzoomingInteraction)
 		document.removeEventListener('keydown', handleKeydown)
 		document.head.removeChild(document.getElementById('image-zoom-styles'))
 	}
@@ -68,7 +68,8 @@ export default (config = defaultConfig) => {
 		getImages().forEach(processImage)
 
 		document.body.addEventListener('click', handleClick)
-		window.addEventListener('scroll', handleScroll)
+		window.addEventListener('scroll', handleUnzoomingInteraction)
+		window.addEventListener('resize', handleUnzoomingInteraction)
 		document.addEventListener('keydown', handleKeydown)
 
 		cb()
