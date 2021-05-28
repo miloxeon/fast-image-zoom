@@ -1,6 +1,6 @@
 {
 	"name": "fast-image-zoom",
-	"version": "4.0.4",
+	"version": "4.0.5",
 	"description": "🏞 Fast image zoom on click as seen on popular publishing platform",
 	"repository": "git@github.com:mvoloskov/fast-image-zoom.git",
 	"main": "src/index.js",
