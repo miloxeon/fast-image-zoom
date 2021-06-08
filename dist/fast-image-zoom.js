@@ -2,43 +2,41 @@ var imageZoom = (function () {
 	'use strict';
 
 	var styles = `
-	<style id="image-zoom-styles">
-		:root {
-			overflow-x: hidden;
-		}
+	:root {
+		overflow-x: hidden;
+	}
 
-		.image-zoom-wrapper::after {
-			opacity: 0;
-			transition: opacity 150ms cubic-bezier(.25, .1, .25 ,1);
-			display: block;
-			content: '';
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background-color: white;
-			z-index: 99998;
-			pointer-events: none;
-		}
+	.image-zoom-wrapper::after {
+		opacity: 0;
+		transition: opacity 150ms cubic-bezier(.25, .1, .25 ,1);
+		display: block;
+		content: '';
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: white;
+		z-index: 99998;
+		pointer-events: none;
+	}
 
-		.image-zoom-wrapper.image-zoom-wrapper-zoomed::after {
-			opacity: 1;
-			cursor: zoom-out;
-			pointer-events: all;
-		}
+	.image-zoom-wrapper.image-zoom-wrapper-zoomed::after {
+		opacity: 1;
+		cursor: zoom-out;
+		pointer-events: all;
+	}
 
-		.image-zoom {
-			transition: transform 300ms cubic-bezier(.25, .1, .25 ,1);
-			cursor: zoom-in;
-		}
+	.image-zoom {
+		transition: transform 300ms cubic-bezier(.25, .1, .25 ,1);
+		cursor: zoom-in;
+	}
 
-		.image-zoom-zoomed {
-			position: relative;
-			z-index: 99999;
-			cursor: zoom-out;
-		}
-	</style>
+	.image-zoom-zoomed {
+		position: relative;
+		z-index: 99999;
+		cursor: zoom-out;
+	}
 `;
 
 	const debounce = (f, ms) => {
@@ -78,7 +76,12 @@ var imageZoom = (function () {
 		});
 	};
 
-	const injectStyles = css => (document.head.innerHTML += css);
+	const injectStyles = css => {
+		const style = document.createElement('style');
+		style.innerHTML = css;
+		style.setAttribute('id', 'image-zoom-styles');
+		document.head.appendChild(style);
+	};
 
 	const getScale = (imageHeight, imageWidth, maxHeight, maxWidth) => {
 		const widthScale = maxWidth / imageWidth;

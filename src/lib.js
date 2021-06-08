@@ -35,7 +35,12 @@ export const unzoomImage = image => {
 	})
 }
 
-export const injectStyles = css => (document.head.innerHTML += css)
+export const injectStyles = css => {
+	const style = document.createElement('style')
+	style.innerHTML = css
+	style.setAttribute('id', 'image-zoom-styles')
+	document.head.appendChild(style)
+}
 
 const getScale = (imageHeight, imageWidth, maxHeight, maxWidth) => {
 	const widthScale = maxWidth / imageWidth
