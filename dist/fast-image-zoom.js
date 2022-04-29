@@ -262,7 +262,7 @@ var imageZoom = (function () {
 			cb();
 		};
 
-		if (document.readyState === 'interactive' || document.readyState === 'ready') {
+		if (document.readyState === 'interactive' || document.readyState === 'complete') {
 			start();
 		} else {
 			document.addEventListener('DOMContentLoaded', start);
