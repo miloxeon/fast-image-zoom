@@ -142,6 +142,8 @@ You can always hack the plugin redefining straightforward CSS:
 }
 ```
 
+For now, `!important` might be needed, as styles are injected into `<head>`. This will probably be changed in the future.
+
 ## Anatomy
 
 - `.image-zoom-wrapper` — element that wraps every image. Mimicks its `display` property. We use it to add page background and slightly separate the zoomed image from what is behind.
