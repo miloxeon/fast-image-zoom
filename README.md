@@ -56,7 +56,7 @@ imageZoom()
 ### Alternative — use CDN
 
 ```HTML
-<script src="https://unpkg.com/fast-image-zoom@7.0.0/dist/fast-image-zoom.js"></script>
+<script src="https://unpkg.com/fast-image-zoom@7.0.1/dist/fast-image-zoom.js"></script>
 <script>
   imageZoom()
 </script>
@@ -182,7 +182,7 @@ To migrate, just replace this
 ...with this:
 
 ```HTML
-<script src="https://unpkg.com/fast-image-zoom@7.0.0/dist/fast-image-zoom.js"></script>
+<script src="https://unpkg.com/fast-image-zoom@7.0.1/dist/fast-image-zoom.js"></script>
 ```
 
 The old URL was a historic mistake. I sincerely apologize for the inconvenience.
