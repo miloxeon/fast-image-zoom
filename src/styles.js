@@ -1,8 +1,4 @@
 export default `
-	:root {
-		overflow-x: hidden;
-	}
-
 	.image-zoom-wrapper::after {
 		opacity: 0;
 		transition: opacity 150ms cubic-bezier(.25, .1, .25 ,1);

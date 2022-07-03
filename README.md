@@ -17,22 +17,21 @@
     <a href="https://miloslav.website">Author</a>
 </p>
 
-
 # 🏞 Fast Image Zoom
 
-Image zoom on click as seen on popular publishing platform.
+Image zoom on click as seen on the popular publishing platform.
 
-## What it does?
+## What does it do?
 
-You click on an image and it smoothly zooms in or out to fit screen. You click again — it smoothly goes back to normal. You scroll — it also goes back.
+You click on an image and it smoothly zooms in or out to fit the screen. You click again — it smoothly goes back to normal. You scroll — it also goes back.
 
 ## Why is it better than alternatives?
 
 - 🛠 Framework-agnostic — works with everything from Knockout.js to Web Components
 - 👌 Zero-dependency
 - 🧬 Perfect for dynamic content, mutation-agnostic — you can do whatever you want with images, it'll work
-- ⚡️ Blazing fast — no matter if it's 10 images or 10000, it uses only two event listeners. Not per image, *just two listeners*. Complexity is always *O(1)*
-- 🤓 Powered by quirky math to precisely calculate everything and do the trick with only *one transformation*
+- ⚡️ Blazing fast — no matter if it's 10 images or 10000, it uses only two event listeners. Not per image, _just two listeners_. Complexity is always _O(1)_
+- 🤓 Powered by quirky math to precisely calculate everything and do the trick with only _one transformation_
 - 🦋 Looks good on both dark and light modes
 - 🍦 Zero-configuration by default but extensible when you need it
 - 🗿 Works flawlessly even on iOS Safari, in every orientation, with every image no matter the size and dimensions
@@ -67,7 +66,7 @@ That's it!
 
 ## How it works
 
-Plugin targets *meaningful*, content images:
+Plugin targets _meaningful_, content images:
 
 ```HTML
 <!-- yes -->
@@ -85,27 +84,27 @@ Here are the defaults:
 ```JS
 imageZoom({
     selector: `img[alt]:not([alt=""]):not([data-image-zoom-disabled])`,
+    containerSelector: null,
     cb: () => {},
     exceed: false,
     padding: 20,
 })
 ```
 
-- `selector` (string) is used to target images. By default it only targets *meaningful* images (e.g. ones with `alt`), so your icons won't be magnified on click.
-
-- `cb` (function) fires after the plugin is initialized.
-
-- `exceed` (boolean) defines whether images should exceed their natural size when zoomed. For example if you zoom 100x100 image on a 1080p screen with `exceed: false`, its final size will be 100px, meanwile with `exceed: true` it will be 1080px.
+- `selector` (string) is used to target images. By default it only targets _meaningful_ images (e.g. ones with `alt`), so your icons won't be magnified on click.
+- `containerSelector` limits plugin's scope to a certain element. It's useful for modals. Only the images inside that element will be clickable, and the scroll handler that un-zooms images will work on that element only.
+- `cb` (function) is called after the plugin is initialized.
+- `exceed` (boolean) defines whether images should exceed their natural size when zoomed. For example, if you zoom 100x100 image on a 1080p screen with `exceed: false`, its final size will be 100px, meanwhile, with `exceed: true` it will be 1080px.
 
 - `padding` (integer) defines a gap in pixels between a zoomed image and the closest edge of the viewport.
 
-Note that if `exceed` is false and a smaller image appear to have a larger gap between its edge and the edge of the viewport, padding won't be added. For example, if you zoom an 100x100 image on a 1080p screen and your padding is set to 20, a natural gap between an image and the viewport edge would be (1080 - 100) / 2 = 490, thus there is no need to add that 20px gap.
+Note that if `exceed` is false and smaller images appear to have a larger gap between their edges and the edge of the viewport, padding won't be added. For example, if you zoom a 100x100 image on a 1080p screen and your padding is set to 20, a natural gap between an image and the viewport edge would be (1080 - 100) / 2 = 490, thus there is no need to add that 20px gap.
 
 Only pixels are supported by now.
 
 ### Setting `exceed` per image
 
-You can explicitly define `exceed` for a specific picture via a data-attribute:
+You can explicitly define `exceed` for a specific picture via a data attribute:
 
 ```HTML
 <img src="..." alt="..." data-image-zoom-exceed="true">
@@ -147,13 +146,13 @@ For now, `!important` might be needed, as styles are injected into `<head>`. Thi
 ## Anatomy
 
 - `.image-zoom-wrapper` — element that wraps every image. Mimicks its `display` property. We use it to add page background and slightly separate the zoomed image from what is behind.
-- `.image-zoom-wrapper-zoomed` — the same wrapper but when image is zoomed.
-- `.image-zoom` — image itself that was processed and is interactive ready to zoom.
+- `.image-zoom-wrapper-zoomed` — the same wrapper but when the image is zoomed.
+- `.image-zoom` — the image itself that was processed and is interactive, ready to zoom.
 - `.image-zoom-zoomed` — zoomed image.
 
 ## Disabling the plugin
 
-Being called, plugin returns the destroy function that you may call to remove event listeners. It will also remove related styles from `<head>` and from images themselves.
+Being called, the plugin returns the destroy function that you may call to remove event listeners. It will also remove related styles from `<head>` and from the images themselves.
 
 ```JS
 const destroy = imageZoom()
@@ -166,6 +165,6 @@ destroy()
 
 - `img` inline styles will be destroyed. Use CSS selectors to stylize images.
 - `img` shouldn't have transforms. If needed, wrap it with a container and apply transforms there instead.
-- `:root`'s `overflow-x` will be `hidden`
+- Container's `overflow-x` will be `hidden`. If `containerSelector` is null, then `overflow-x` will be `hidden` for the root element.
 
 Enjoy!

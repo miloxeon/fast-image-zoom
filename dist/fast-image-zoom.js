@@ -2,10 +2,6 @@ var imageZoom = (function () {
 	'use strict';
 
 	var styles = `
-	:root {
-		overflow-x: hidden;
-	}
-
 	.image-zoom-wrapper::after {
 		opacity: 0;
 		transition: opacity 150ms cubic-bezier(.25, .1, .25 ,1);
@@ -196,17 +192,23 @@ var imageZoom = (function () {
 
 	const defaultConfig = {
 		selector: `img[alt]:not([alt=""]):not([data-image-zoom-disabled])`,
+		containerSelector: null,
 		cb: () => {},
 		padding: 20,
 		exceed: false,
 	};
 
 	var index = (config = defaultConfig) => {
-		const { selector, cb } = Object.assign({}, defaultConfig, config);
+		const { selector, containerSelector, cb } = Object.assign({}, defaultConfig, config);
 
 		let zoomed = null;
-		const getImages = () =>
-			Array.prototype.slice.call(document.querySelectorAll(selector));
+		const getImages = () => Array.prototype.slice.call(document.querySelectorAll(selector));
+		const container = document.querySelector(containerSelector);
+
+		if (container) container.style.overflowX = 'hidden';
+		else document.documentElement.style.overflowX = 'hidden';
+
+		const interactiveElement = container || window;
 
 		const handleClick = debounce(e => {
 			const target = e.target;
@@ -218,9 +220,7 @@ var imageZoom = (function () {
 			}
 
 			if (target.matches(selector)) {
-				if (!target.classList.contains('image-zoom')) {
-					processImage(target);
-				}
+				if (!target.classList.contains('image-zoom')) processImage(target);
 				zoomImage(target, config);
 				zoomed = target;
 			}
@@ -235,27 +235,25 @@ var imageZoom = (function () {
 		const handleKeydown = e => {
 			if (e.code !== 'Escape') return
 			e.preventDefault();
-			if (zoomed) {
-				unzoomImage(zoomed);
-				zoomed = null;
-			}
+			if (!zoomed) return
+			unzoomImage(zoomed);
+			zoomed = null;
 		};
 
 		const destroy = () => {
-			document.body.removeEventListener('click', handleClick);
-			window.removeEventListener('scroll', handleUnzoomingInteraction);
+			document.head.removeChild(document.getElementById('image-zoom-styles'));
+			interactiveElement.removeEventListener('click', handleClick);
+			interactiveElement.removeEventListener('scroll', handleUnzoomingInteraction);
 			window.removeEventListener('resize', handleUnzoomingInteraction);
 			document.removeEventListener('keydown', handleKeydown);
-			document.head.removeChild(document.getElementById('image-zoom-styles'));
 		};
 
 		const start = () => {
 			injectStyles(styles);
-
 			getImages().forEach(processImage);
 
-			document.body.addEventListener('click', handleClick);
-			window.addEventListener('scroll', handleUnzoomingInteraction);
+			interactiveElement.addEventListener('click', handleClick);
+			interactiveElement.addEventListener('scroll', handleUnzoomingInteraction);
 			window.addEventListener('resize', handleUnzoomingInteraction);
 			document.addEventListener('keydown', handleKeydown);
 
