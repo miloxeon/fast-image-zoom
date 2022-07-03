@@ -56,7 +56,7 @@ imageZoom()
 ### Alternative — use CDN
 
 ```HTML
-<script src="https://cdn.jsdelivr.net/gh/mvoloskov/fast-image-zoom/dist/fast-image-zoom.min.js"></script>
+<script src="https://unpkg.com/fast-image-zoom@7.0.0/dist/fast-image-zoom.js"></script>
 <script>
   imageZoom()
 </script>
@@ -168,3 +168,21 @@ destroy()
 - Container's `overflow-x` will be `hidden`. If `containerSelector` is null, then `overflow-x` will be `hidden` for the root element.
 
 Enjoy!
+
+## Note
+
+The old URL (https://cdn.jsdelivr.net/gh/mvoloskov/fast-image-zoom/dist/fast-image-zoom.min.js) is deprecated. Please use the new, versioned one: https://unpkg.com/fast-image-zoom@7.0.0/dist/fast-image-zoom.js.
+
+To migrate, just replace this
+
+```HTML
+<script src="https://cdn.jsdelivr.net/gh/mvoloskov/fast-image-zoom/dist/fast-image-zoom.min.js"></script>
+```
+
+...with this:
+
+```HTML
+<script src="https://unpkg.com/fast-image-zoom@7.0.0/dist/fast-image-zoom.js"></script>
+```
+
+The old URL was a historic mistake. I sincerely apologize for the inconvenience.
