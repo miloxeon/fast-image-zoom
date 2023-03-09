@@ -145,8 +145,8 @@ For now, `!important` might be needed, as styles are injected into `<head>`. Thi
 
 ## Anatomy
 
-- `.image-zoom-wrapper` — element that wraps every image. Mimicks its `display` property. We use it to add page background and slightly separate the zoomed image from what is behind.
-- `.image-zoom-wrapper-zoomed` — the same wrapper but when the image is zoomed.
+- `.image-zoom-wrapper` — element that wraps every image. Mimics its `display` property. We use it to add page background and slightly separate the zoomed image from what's behind it.
+- `.image-zoom-wrapper-zoomed` — the same wrapper but for when the image is zoomed.
 - `.image-zoom` — the image itself that was processed and is interactive, ready to zoom.
 - `.image-zoom-zoomed` — zoomed image.
 
@@ -163,7 +163,7 @@ destroy()
 
 ## Limitations
 
-- `img` inline styles will be destroyed. Use CSS selectors to stylize images.
+- `img` inline styles will be overwritten. Use CSS selectors to stylize images.
 - `img` shouldn't have transforms. If needed, wrap it with a container and apply transforms there instead.
 - Container's `overflow-x` will be `hidden`. If `containerSelector` is null, then `overflow-x` will be `hidden` for the root element.
 
@@ -185,4 +185,4 @@ To migrate, just replace this
 <script src="https://unpkg.com/fast-image-zoom@7.0.1/dist/fast-image-zoom.js"></script>
 ```
 
-The old URL was a historic mistake. I sincerely apologize for the inconvenience.
+The old URL was a historic mistake. I apologize for the inconvenience.
