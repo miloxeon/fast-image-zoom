@@ -2,19 +2,14 @@
     <img width="600" alt="" src="https://user-images.githubusercontent.com/14220138/118895782-5b68ea00-b8f6-11eb-8019-1bc822562666.gif">
 </p>
 <p align="center">
-    <a href="https://github.com/mvoloskov/fast-image-zoom/blob/master/package.json"><img src="https://img.shields.io/badge/dependencies-0-brightgreen" alt="Dependencies"></a>
+    <a href="https://github.com/miloxeon/fast-image-zoom/blob/master/package.json"><img src="https://img.shields.io/badge/dependencies-0-brightgreen" alt="Dependencies"></a>
     <a href="https://www.npmjs.com/package/fast-image-zoom"><img alt="npm" src="https://img.shields.io/npm/v/fast-image-zoom"></a>
-    <img alt="License" src="https://img.shields.io/github/license/mvoloskov/fast-image-zoom?color=brightgreen">
-    <a href="https://www.buymeacoffee.com/mvoloskov"><img alt="Sponsor this project" src="https://img.shields.io/badge/-sponsor-ffdd00?logo=buy-me-a-coffee&logoColor=black"></a>
-    <a href="https://github.com/mvoloskov"><img alt="My github" src="https://img.shields.io/github/followers/mvoloskov?style=social"></a>
-    <a href="https://twitter.com/intent/user?screen_name=mvoloskov"><img alt="My twitter" src="https://img.shields.io/twitter/follow/mvoloskov?style=social"></a>
+    <img alt="License" src="https://img.shields.io/github/license/miloxeon/fast-image-zoom?color=brightgreen">
 </p>
 <p align="center">
     <a href="https://miloslav.website/fast-image-zoom">Demo</a>
     &nbsp;&nbsp;&bull;&nbsp;&nbsp;
     <a href="#configuration">Configuration</a>
-    &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-    <a href="https://miloslav.website">Author</a>
 </p>
 
 # 🏞 Fast Image Zoom
@@ -168,21 +163,3 @@ destroy()
 - Container's `overflow-x` will be `hidden`. If `containerSelector` is null, then `overflow-x` will be `hidden` for the root element.
 
 Enjoy!
-
-## Note
-
-The old URL (https://cdn.jsdelivr.net/gh/mvoloskov/fast-image-zoom/dist/fast-image-zoom.min.js) is deprecated. Please use the new, versioned one: https://unpkg.com/fast-image-zoom@7.0.0/dist/fast-image-zoom.js.
-
-To migrate, just replace this
-
-```HTML
-<script src="https://cdn.jsdelivr.net/gh/mvoloskov/fast-image-zoom/dist/fast-image-zoom.min.js"></script>
-```
-
-...with this:
-
-```HTML
-<script src="https://unpkg.com/fast-image-zoom@7.0.1/dist/fast-image-zoom.js"></script>
-```
-
-The old URL was a historic mistake. I apologize for the inconvenience.
